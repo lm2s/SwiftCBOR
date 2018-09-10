@@ -14,4 +14,14 @@ Pod::Spec.new do |s|
   s.source_files = 'Sources/SwiftCBOR/*.{swift,h}'
 
   s.requires_arc = true
+
+  s.preserve_paths = 'CBOR/libCBOR.a'
+  s.ios.vendored_library = 'CBOR/CBOR.a'
+  s.prepare_command  = <<-CMD
+  if [ -f $PWD/CBOR/libCBOR.a ]
+      then
+      rm -rf $PWD/CBOR/libCBOR.a
+      fi
+      ln -s $PWD/CBOR/CBOR.a $PWD/CBOR/libCBOR.a
+      CMD
 end
